@@ -1,0 +1,58 @@
+﻿@* Modelo que se usa en el formulario, contiene los campos para editar una etiqueta existente *@
+@model BlogFitnessApp.Models.ViewModels.EditTagRequest
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+    <div class="card p-5 shadow-lg rounded-4" style="width: 100%; max-width: 600px;">
+
+        <h2 class="fw-bold text-center mb-4 mt-2 text-uppercase text-dark">Editar Etiqueta</h2>
+
+
+        @if(Model != null)
+        {
+            @* Formulario para editar etiqueta existente, con metodo POST *@
+            <form method="post" novalidate>
+
+                <div class="mb-4">
+                    <label asp-for="Id" class="form-label fw-semibold text-dark">Id</label>
+                    <input asp-for="Id" readonly class="form-control form-control-lg rounded-3" />
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Name" class="form-label fw-semibold text-dark">Nombre Técnico</label>
+                    <input asp-for="Name" id="Name" class="form-control form-control-lg rounded-3" placeholder="Ej: fuerza, cardio, nutrición" />
+                    <span asp-validation-for="Name" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="DisplayName" class="form-label fw-semibold text-dark">Nombre para Mostrar</label>
+                    <input asp-for="DisplayName" id="DisplayName" class="form-control form-control-lg rounded-3" placeholder="Ej: Entrenamiento de Fuerza" />
+                    <span asp-validation-for="DisplayName" class="text-danger small"></span>
+                </div>
+
+                @* boton eliminar, actualizar  *@
+                <div class="d-flex gap-2 p-2">
+                    <button type="submit" class="btn btn-dark fw-bold py-2 rounded-3 flex-grow-1">
+                        <i class="bi bi-pencil-square me-2"></i>Actualizar
+                    </button>
+
+                    <button asp-area=""
+                            asp-action="Delete"
+                            asp-controller="AdminTags"
+                            type="submit"
+                            class="btn btn-danger fw-bold py-2 rounded-3 flex-grow-1">
+                        <i class="bi bi-trash me-2"></i>Eliminar
+                    </button>
+                </div>
+
+
+            </form>
+        }
+        else
+        {
+            <div class="alert alert-warning text-center" role="alert">
+                <strong>¡Oops!</strong> No se encontró ninguna etiqueta para editar. Por favor, vuelve a la lista de etiquetas o crea una nueva.
+            </div>
+        }
+
+    </div>
+</div>
