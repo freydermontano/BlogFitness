@@ -15,6 +15,8 @@ builder.Services.AddDbContext<BLogFitnessDbContext>(options =>
 // Registro del repositorio de Tags para inyeccion de dependencias,
 // permitiendo usar ITagRepository con su implementación TagRepositoryImpl
 builder.Services.AddScoped<ITagRepository, TagRepositoryImpl>();
+// Registro del repositorio de BlogPosts para inyeccion de dependencias,
+builder.Services.AddScoped<IBlogPostRepository, BlogPostRepositoryImpl>();
 
 
 var app = builder.Build();

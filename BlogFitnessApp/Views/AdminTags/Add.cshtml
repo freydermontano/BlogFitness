@@ -1,12 +1,18 @@
 ﻿@* Modelo  en el formulario que contiene las propiedades necesarias para crear una nueva etiqueta *@
 @model BlogFitnessApp.Models.ViewModels.AddTagRequest
 
-<div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+<div class="container d-flex flex-column align-items-center justify-content-center" style="min-height: 100vh;">
+
+    <section class="container-lg py-3">
+        <header class="text-center mb-5">
+            <h2 class="fw-bold">Administrar etiquetas - Función de administrador</h2>
+            <p class="text-muted">Aquí puedes ver, agregar o editar las etiquetas que clasifican las publicaciones</p>
+        </header>
+    </section>
+
     <div class="card p-5 shadow-lg rounded-4" style="width: 100%; max-width: 600px;">
 
         <h2 class="fw-bold text-center mb-4 mt-2 text-uppercase text-dark">Nueva Etiqueta</h2>
-
-       
 
         <!-- Formulario para agregar etiqueta -->
         <form method="post" novalidate>

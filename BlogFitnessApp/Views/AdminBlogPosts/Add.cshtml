@@ -1,0 +1,83 @@
+﻿@model BlogFitnessApp.Models.ViewModels.AddBlogPostRequest
+
+<div class="container-lg py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Agregar nuevo blog - Función de administrador</h2>
+        <p class="text-muted">Aquí puedes ver todas las etiquetas que se usan para clasificar las publicaciones</p>
+    </div>
+
+    <div class="card p-5 shadow-lg rounded-4 mx-auto" style="max-width: 700px;">
+        <form method="post">
+
+            <div class="mb-3">Heading
+                <label asp-for="Heading" class="form-label" >Encabezado</label>
+                <input asp-for="Heading" id="Heading" class="form-control" />
+                <span asp-validation-for="Heading" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="PageTitle" class="form-label">Título de página</label>
+                <input asp-for="PageTitle" id="PageTitle" class="form-control" />
+                <span asp-validation-for="PageTitle" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Content" class="form-label">Contenido</label>
+                <textarea asp-for="Content" id="Content" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ShortDescription" class="form-label">Descripción corta</label>
+                <textarea asp-for="ShortDescription" id="ShortDescription" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="ShortDescription" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Author" class="form-label">Autor</label>
+                <input asp-for="Author" id="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="FeaturedImageUrl" class="form-label">URL de imagen destacada</label>
+                <input asp-for="FeaturedImageUrl" id="FeaturedImageUrl" class="form-control" />
+                <span asp-validation-for="FeaturedImageUrl" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="UrlHandle" class="form-label">Identificador URL</label>
+                <input asp-for="UrlHandle" id="UrlHandle" class="form-control" />
+                <span asp-validation-for="UrlHandle" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="PublishedDate" class="form-label">Fecha de publicación</label>
+                <input asp-for="PublishedDate" id="PublishedDate" type="date" class="form-control" />
+                <span asp-validation-for="PublishedDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-4">
+                <input asp-for="Visible" class="form-check-input" type="checkbox" />
+                <label asp-for="Visible" id="Visible" class="form-check-label">Es Visible</label>
+            </div>
+
+            <!-- Campo desplegable para seleccionar una etiqueta del blog.
+            Las opciones se cargan desde Model.Tags y el valor seleccionado
+            se asigna a SelectedTag -->
+            <div class="mb-3">
+                <label asp-for="SelectedTag" class="form-label">Etiquetas</label>
+                <select class="form-select"
+                        asp-items="@Model.Tags"
+                        asp-for="SelectedTag">
+                </select>
+            </div>
+
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-dark btn-lg">Guardar publicación</button>
+            </div>
+        </form>
+    </div>
+</div>
+
