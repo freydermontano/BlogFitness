@@ -1,0 +1,58 @@
+﻿@model List<BlogFitnessApp.Models.Domain.BlogPost>
+
+<div class="container-lg py-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Publicaciones del Blog</h2>
+        <p class="text-muted">Listado de entradas publicadas. Puedes editarlas, eliminarlas o ver su estado actual.</p>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover shadow-sm">
+            <thead class="table-dark text-center">
+                <tr>
+                    <th>Id</th>
+                    <th>Título</th>
+                    <th>Publicado</th>
+                    <th>Visible</th>
+                    <th>Etiquetas</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var blogPost in Model)
+                {
+                    <tr>
+                        <td>@blogPost.Id</td>
+                        <td>@blogPost.Heading</td>
+                        <td>
+                            @blogPost.PublishedDate.ToString("dd ' ' MMMM 'del' yyyy", new System.Globalization.CultureInfo("es-ES"))
+                        </td>
+                        <td>@(blogPost.Visible ? "Sí" : "No")</td>
+                        <td>
+                            @if (blogPost.Tags != null && blogPost.Tags.Any())
+                            {
+                                @foreach (var tag in blogPost.Tags)
+                                {
+                                    <span class="badge bg-secondary">@tag.Name</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">Sin etiquetas</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-area=""
+                                asp-controller="AdminBlogPosts" 
+                                asp-action="Edit"
+                                asp-route-id="@blogPost.Id">
+                                Editar
+                            </a>
+                        </td>
+                       
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

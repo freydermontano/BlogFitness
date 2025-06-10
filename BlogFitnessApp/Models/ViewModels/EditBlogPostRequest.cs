@@ -1,6 +1,8 @@
-﻿namespace BlogFitnessApp.Models.Domain
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+
+namespace BlogFitnessApp.Models.ViewModels
 {
-    public class BlogPost
+    public class EditBlogPostRequest
     {
 
         public Guid Id { get; set; }
@@ -14,8 +16,12 @@
         public DateTime PublishedDate { get; set; }
         public bool Visible { get; set; }
 
-        //Navegacion proppiedad para la relacion muchos a muchos con Tag
-        public ICollection<Tag> Tags { get; set; }
+
+        // Propiedad para los tags asociados al blog post
+        public IEnumerable<SelectListItem> Tags { get; set; }
+
+        // Propiedad para los tags seleccionados en el formulario
+        public string[] SelectedTag { get; set; } = Array.Empty<string>();
 
     }
 }

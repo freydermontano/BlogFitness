@@ -1,6 +1,7 @@
 ﻿using BlogFitnessApp.Data;
 using BlogFitnessApp.Models.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 
 namespace BlogFitnessApp.Repositories
 {
@@ -42,20 +43,24 @@ namespace BlogFitnessApp.Repositories
 
         public async Task<IEnumerable<BlogPost>> GetAllAsync()
         {
-            return await bLogFitnessDbContext.BlogPosts.ToListAsync();
+            //Include(x => x.Tags) le dice a EF Core: Cuando obtengas los blog posts,
+            //tambien trae los tags que estan relacionados con cada uno.
+            return await bLogFitnessDbContext.BlogPosts.Include(x => x.Tags).ToListAsync();
         }
 
         public Task<BlogPost?> GetByIdAsync(Guid id)
         {
-            return bLogFitnessDbContext.BlogPosts.FirstOrDefaultAsync(x => x.Id == id);
+            return bLogFitnessDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
-            var existingBlogPost = bLogFitnessDbContext.BlogPosts.Find(blogPost.Id);
+            var existingBlogPost = await bLogFitnessDbContext.BlogPosts.Include(x => x.Tags)
+                .FirstOrDefaultAsync(x => x.Id == blogPost.Id); 
 
             if (existingBlogPost != null)
             {
+
                 existingBlogPost.Heading = blogPost.Heading;
                 existingBlogPost.PageTitle = blogPost.PageTitle;
                 existingBlogPost.Content = blogPost.Content;
@@ -65,9 +70,11 @@ namespace BlogFitnessApp.Repositories
                 existingBlogPost.UrlHandle = blogPost.UrlHandle;
                 existingBlogPost.PublishedDate = blogPost.PublishedDate;
                 existingBlogPost.Visible = blogPost.Visible;
+                existingBlogPost.Tags = blogPost.Tags;
 
                 await bLogFitnessDbContext.SaveChangesAsync();
 
+                //retornar el blog actualizado
                 return existingBlogPost;
             }
 
