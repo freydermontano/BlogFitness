@@ -39,9 +39,17 @@
                 <span asp-validation-for="Author" class="text-danger"></span>
             </div>
 
+            @* Implementando campo para subir imagenes desde el formulario  *@
+            <div class="mb-3">
+                <label class="form-label">Subir Imagen</label>
+                <input type="file" name="name" id="featuredImagenUpload" class="form-control" />
+                <img src="" id="featuredImagenDisplay" style="display:none; margin-top:1rem;" width="285px" />
+            </div>
+
+
             <div class="mb-3">
                 <label asp-for="FeaturedImageUrl" class="form-label">URL de imagen destacada</label>
-                <input asp-for="FeaturedImageUrl" id="FeaturedImageUrl" class="form-control" />
+                <input asp-for="FeaturedImageUrl" id="featuredImageUrl" class="form-control" />
                 <span asp-validation-for="FeaturedImageUrl" class="text-danger"></span>
             </div>
 
@@ -87,6 +95,42 @@
 @* Integracion del editor de texto enriquecido Froala, aplicado al campo 'Content' *@
 @section Scripts {
     <script>
-        var editor = new FroalaEditor('#Content');
+        var editor = new FroalaEditor('#Content',{
+            imageUploadURL:'/api/images';
+        });
+
+        //subir imagen y obtener su URL
+        const featuredImageUploadElement = document.getElementById('featuredImagenUpload');
+        const featuredImageUrlElement = document.getElementById('featuredImageUrl');
+        const featuredImagenDisplayEelemnt = document.getElementById('featuredImagenDisplay');
+
+
+            async function uploadFeautureImage(e) {
+            console.log('Subiendo imagen..', e.target.files[0]);
+
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            await fetch('/api/images', {
+                method: 'POST',
+                headers: {
+                    'Accept': '*/*'
+                },
+                body: data
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Respuesta del servidor:', result);
+                featuredImageUrlElement.value = result.link; //Asigna esa URL al input oculto
+                featuredImagenDisplayEelemnt.src = result.link;
+                featuredImagenDisplayEelemnt.style.display = "block";
+            })
+            .catch(error => {
+                console.error('Error al subir la imagen:', error);
+            });
+        };
+
+        //Evento para capturar el cambio
+        featuredImageUploadElement.addEventListener('change', uploadFeautureImage);
     </script>
 }
