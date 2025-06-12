@@ -1,8 +1,103 @@
-﻿@{
+﻿@model List<BlogFitnessApp.Models.Domain.BlogPost>;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="container-xl py-5 px-4 px-xl-5">
+    <div class="row align-items-center g-5">
+        <!-- Texto introductorio -->
+        <div class="col-12 col-lg-6">
+            <h1 class="fw-bold display-5 mb-3">
+                Bienvenido a <span class="text-primary">Blog Fitness</span>
+            </h1>
+            <p class="fs-5 text-muted mb-3">
+                Tu espacio para inspirarte, aprender y crecer en el mundo del fitness y el bienestar.
+            </p>
+            <ul class="list-unstyled lh-lg text-muted mb-4">
+                <li><i class="fas fa-check-circle text-success me-2"></i> Consejos de salud y bienestar</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Rutinas efectivas para todos los niveles</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Nutrición y recetas saludables</li>
+                <li><i class="fas fa-check-circle text-success me-2"></i> Comunidad activa y motivadora</li>
+            </ul>
+
+            <div class="d-flex gap-4 mt-4">
+                <div class="text-center">
+                    <i class="fas fa-heartbeat fa-2x text-danger"></i>
+                    <p class="mt-2 small fw-semibold">Salud</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-dumbbell fa-2x text-primary"></i>
+                    <p class="mt-2 small fw-semibold">Entrenamiento</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-apple-alt fa-2x text-warning"></i>
+                    <p class="mt-2 small fw-semibold">Nutrición</p>
+                </div>
+                <div class="text-center">
+                    <i class="fas fa-users fa-2x text-success"></i>
+                    <p class="mt-2 small fw-semibold">Comunidad</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Imagen destacada -->
+        <div class="col-12 col-lg-6 text-center">
+            <img src="https://images.pexels.com/photos/902144/pexels-photo-902144.jpeg"
+                 alt="fitness"
+                 class="img-fluid rounded-4 shadow-lg"
+                 style="max-height: 400px; object-fit: cover; width: 100%;" />
+        </div>
+    </div>
+</section>
+
+<!-- Seccion de publicaciones -->
+<section class="container py-5">
+    <h2 class="text-center fw-bold mb-5">Últimas publicaciones</h2>
+    <div class="row g-4">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var blogPost in Model)
+            {
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+                        <img src="@blogPost.FeaturedImageUrl"
+                             alt="@blogPost.Heading"
+                             class="card-img-top"
+                             style="height: 200px; object-fit: cover;" />
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">@blogPost.Heading</h5>
+                            <p class="card-text text-muted">@blogPost.ShortDescription</p>
+                        </div>
+
+                        <div class="mt-2 p-3 text-muted small">
+                            @* Mostrar etiquetas  *@
+                            <div class="mb-3">
+                                @foreach(var blogPostTag in blogPost.Tags)
+                                {
+                                    <span class="badge bg-secondary me-1 px-3 h-5">@blogPostTag.Name</span>
+                                }
+                            </div>
+                            <span>
+                                Autor: <strong>@blogPost.Author</strong> &nbsp; <br />
+                                Publicado el:
+                                <strong>
+                                    @blogPost.PublishedDate.ToString("dd 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-ES"))
+                                </strong>
+                            </span>
+                            <p class="text-muted small mb-2 mt-3">Contenido exclusivo para tu bienestar.</p>
+                            <a href="#" class="btn btn-dark w-100">Leer más</a>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col text-center">
+                <p class="text-muted">No hay publicaciones disponibles por ahora.</p>
+            </div>
+        }
+    </div>
+</section>
