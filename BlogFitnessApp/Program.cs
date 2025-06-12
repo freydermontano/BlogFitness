@@ -18,6 +18,8 @@ builder.Services.AddScoped<ITagRepository, TagRepositoryImpl>();
 // Registro del repositorio de BlogPosts para inyeccion de dependencias,
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepositoryImpl>();
 
+// Registro del repositorio de imágenes para inyección de dependencias
+builder.Services.AddScoped<IImageRepository, ClaudinaryImageRepositoryImpl>();  
 
 var app = builder.Build();
 

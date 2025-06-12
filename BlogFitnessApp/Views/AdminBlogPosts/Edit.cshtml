@@ -6,7 +6,7 @@
         <p class="text-muted">Modifica los detalles de la publicación del blog.</p>
     </div>
 
-    <div class="card p-5 shadow-lg rounded-4 mx-auto" style="max-width: 700px;">
+    <div class="card p-5 shadow-lg rounded-4 mx-auto" style="max-width: 940px;">
         @if (Model != null)
         {
             <form method="post">
@@ -95,3 +95,10 @@
         }
     </div>
 </div>
+
+@* Integracion del editor de texto enriquecido Froala, aplicado al campo 'Content' *@
+@section Scripts {
+    <script>
+        var editor = new FroalaEditor('#Content');
+    </script>
+}

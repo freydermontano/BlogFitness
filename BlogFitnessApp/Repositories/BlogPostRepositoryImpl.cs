@@ -19,7 +19,6 @@ namespace BlogFitnessApp.Repositories
         }
 
 
-
         public async Task<BlogPost?> AddAsync(BlogPost blogPost)
         {
             await bLogFitnessDbContext.AddAsync(blogPost);
