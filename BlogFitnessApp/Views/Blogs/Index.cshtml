@@ -1,0 +1,57 @@
+﻿@model BlogFitnessApp.Models.Domain.BlogPost;
+
+
+
+@{
+    //Titulo de la pagina
+    ViewData["Title"] = Model.PageTitle;
+}
+
+
+<div class="container-xl py-5">
+    <div class="row justify-content-center">
+        @if (Model != null)
+        {
+            <div class="col-12 col-lg-8">
+                <div class=" overflow-hidden bg-white p-4">
+                    <img src="@Model.FeaturedImageUrl"
+                         alt="@Model.Heading"
+                         class="w-100 mb-4 rounded-4"
+                         style="max-height: 450px; object-fit: cover;" />
+
+                    <h1 class="fw-bold mb-3">@Model.Heading</h1>
+                    <p class="text-muted fs-5 mb-4">@Model.ShortDescription</p>
+
+                    <div class="mb-4">
+                        @foreach (var blogPostTag in Model.Tags)
+                        {
+                            <span class="badge bg-secondary me-2 px-3 py-2">@blogPostTag.Name</span>
+                        }
+                    </div>
+
+                    <div class="mb-4 text-muted">
+                        <span>Autor: <strong>@Model.Author</strong></span> <br />
+                        <span>
+                            Publicado el:
+                            <strong>
+                                @Model.PublishedDate.ToString("dd 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-ES"))
+                            </strong>
+                        </span>
+                    </div>
+
+                    <div class="fs-5 lh-lg mb-5">
+                        @Html.Raw(Model.Content)
+                    </div>
+
+                    <p class="text-muted small">Contenido exclusivo para tu bienestar.</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-warning text-center" role="alert">
+                <h5 class="mb-1">No hay Publicación para mostrar</h5>
+            </div>
+        }
+    </div>
+</div>

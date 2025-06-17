@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using BlogFitnessApp.Models;
+using BlogFitnessApp.Models.ViewModels;
 using BlogFitnessApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,16 +11,32 @@ namespace BlogFitnessApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IBlogPostRepository blogPostRepository;
 
-        public HomeController(ILogger<HomeController> logger, IBlogPostRepository blogPostRepository)
+        public ITagRepository TagRepository { get; }
+
+        public HomeController(ILogger<HomeController> logger, IBlogPostRepository blogPostRepository, ITagRepository tagRepository)
         {
             _logger = logger;
             this.blogPostRepository = blogPostRepository;
+            TagRepository = tagRepository;
         }
 
         public async Task<IActionResult> Index()
         {
+            //Obtenemos todas los blog que se obtienen desde el repositorio
             var blogPosts = await blogPostRepository.GetAllAsync();
-            return View(blogPosts);
+
+            //Obtenemos todas las etiquetas desde el repositorio
+            var tags = await TagRepository.GetAllAsync();
+
+            // instanceamos una clase , para pasar las dos coleciones 
+            var model = new HomeViewModel
+            {
+                blogPosts = blogPosts,
+                Tags = tags
+            };
+
+            //Pasamos  la clase con las dos lista de publicaciones y etiquetas
+            return View(model);
         }
 
         public IActionResult Privacy()

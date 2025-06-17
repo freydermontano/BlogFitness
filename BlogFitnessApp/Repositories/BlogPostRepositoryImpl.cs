@@ -47,6 +47,13 @@ namespace BlogFitnessApp.Repositories
             return await bLogFitnessDbContext.BlogPosts.Include(x => x.Tags).ToListAsync();
         }
 
+        public async Task<BlogPost> GetBlogbyUrlHandleAsync(string urlHandle)
+        {
+            return  await bLogFitnessDbContext.BlogPosts.Include(x => x.Tags)
+                .FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+
+        }
+
         public Task<BlogPost?> GetByIdAsync(Guid id)
         {
             return bLogFitnessDbContext.BlogPosts.Include(x => x.Tags).FirstOrDefaultAsync(x => x.Id == id);
