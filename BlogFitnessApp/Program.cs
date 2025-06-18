@@ -1,5 +1,6 @@
 using BlogFitnessApp.Data;
 using BlogFitnessApp.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +11,16 @@ builder.Services.AddControllersWithViews();
 //Agregar Servicios
 // Configurar DbContext
 builder.Services.AddDbContext<BLogFitnessDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("FitnessBlogDbConnectionString")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("FitnesBlogDbConnectionString")));
+
+// Configurar Identity para autenticación y autorización
+builder.Services.AddDbContext<AuthDbContext>(options => 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("FitnesAuthBlogDbConnectionString")));
+
+// Configurar Identity con opciones personalizadas
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AuthDbContext>();
+
 
 // Registro del repositorio de Tags para inyeccion de dependencias,
 // permitiendo usar ITagRepository con su implementación TagRepositoryImpl
@@ -36,6 +46,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// Configurar autenticacion antes de autorizacion cuando trabajemos con autenticacion
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
