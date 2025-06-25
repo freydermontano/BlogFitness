@@ -22,6 +22,19 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthDbContext>();
 
 
+//
+builder.Services.Configure<IdentityOptions>(option =>
+{
+
+    //Mi validacion del formulario de registro
+    option.Password.RequireDigit = true;
+    option.Password.RequireLowercase = true;
+    option.Password.RequireNonAlphanumeric = true;
+    option.Password.RequireUppercase = true;
+    option.Password.RequiredLength = 7;
+    option.Password.RequiredUniqueChars = 1;
+});
+
 // Registro del repositorio de Tags para inyeccion de dependencias,
 // permitiendo usar ITagRepository con su implementación TagRepositoryImpl
 builder.Services.AddScoped<ITagRepository, TagRepositoryImpl>();

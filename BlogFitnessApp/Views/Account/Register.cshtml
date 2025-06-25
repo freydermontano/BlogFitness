@@ -1,0 +1,50 @@
+﻿@model BlogFitnessApp.Models.ViewModels.RegisterViewModel
+ 
+<div class="container-fluid  d-flex flex-column mb-5">
+    <h1 class="mb-3 fw-bold text-capitalize text-start display-5 p-3 text-capitalize" style="margin-left:6rem">Registrate</h1>
+
+    <div class="row w-100 d-flex justify-content-center ">
+        <!-- Columna del formulario -->
+        <div class="col-lg-5  bg-primary vh-100 d-flex flex-column justify-content-evenly p-5 bg-light rounded-4 overflow-hidden shadow-lg">
+            <!-- Logo -->
+            <div class="mb-5 text-center">
+                <span class="display-3 fw-bold text-success">Fitness</span>
+            </div>
+
+            <!-- Formulario -->
+            <form asp-action="Register">
+                <div class="mb-4 input-group">
+                    <input type="text" class="form-control rounded" placeholder="Nombre de usuario" asp-for="UserName" />
+                </div>
+
+                <div class="mb-4 input-group">
+                    <input type="email" class="form-control rounded" placeholder="Email" asp-for="Email" />
+                </div>
+
+                <div class="mb-4 input-group">
+                    <input type="password" class="form-control rounded" placeholder="Contraseña" asp-for="Password" />
+                </div>
+
+                <div class="d-grid gap-2 mb-3">
+                    <button class="btn btn-success rounded-pill py-2" type="submit">Iniciar Sesión</button>
+                </div>
+
+                <p class="mt-4 small fw-bold text-center">
+                    ¿Ya tienes una cuenta?
+                    <a href="/Account/Register" class="text-warning text-decoration-none">Inicia Sección</a>
+                </p>
+            </form>
+        </div>
+
+        <!-- Columna de imagen -->
+        <div class="col-lg-5 p-0 d-none d-lg-block position-relative">
+            <div style="
+                background: linear-gradient(to bottom, rgba(0,0,0,0.8), rgba(255,255,255,0.1)),
+                            url('https://images.pexels.com/photos/4853040/pexels-photo-4853040.jpeg') no-repeat center center;
+                background-size: cover;
+                height: 100%;
+                width: 100%;">
+            </div>
+        </div>
+    </div>
+</div>

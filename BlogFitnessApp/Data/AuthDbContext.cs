@@ -13,7 +13,7 @@ namespace BlogFitnessApp.Data
     {
         private readonly IdentityDbContext identityDbContext;
 
-        public AuthDbContext(DbContextOptions options) : base(options)
+        public AuthDbContext(DbContextOptions<AuthDbContext> options) : base(options)
         {
         }
 
