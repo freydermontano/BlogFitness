@@ -2,7 +2,7 @@
 
 <div class="container-fluid d-flex flex-column mb-5">
     <h1 class="mb-3 fw-bold text-capitalize text-start display-5 p-3" style="margin-left: 5rem;">
-        Regístrate
+        Iniciar Sección
     </h1>
 
     <div class="row w-100 d-flex justify-content-center">
@@ -29,8 +29,14 @@
 
                 <p class="mt-4 small fw-bold text-center">
                     ¿No tienes una cuenta?
-                    <a href="/Account/Register" class="text-warning text-decoration-none">Regístrate</a>
+                    <a asp-area=""
+                       asp-action="Register"
+                       asp-controller="Account" class="text-warning text-decoration-none">Regístrate</a>
                 </p>
+
+
+                <input hidden type="submit" asp-for="ReturnUrl" />
+
             </form>
         </div>
 

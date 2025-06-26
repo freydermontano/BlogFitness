@@ -2,12 +2,14 @@
 using BlogFitnessApp.Models.Domain;
 using BlogFitnessApp.Models.ViewModels;
 using BlogFitnessApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace BlogFitnessApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminTagsController : Controller
     {
 
@@ -15,14 +17,12 @@ namespace BlogFitnessApp.Controllers
         private readonly ITagRepository _tagRepository;  
 
 
+
         // Constructor que recibe el contexto por inyeccion de dependencias
         public AdminTagsController(ITagRepository tagRepository)
         {
             _tagRepository = tagRepository;
         }
-
-
-
 
         [HttpGet]
         public IActionResult Add()    
@@ -51,7 +51,6 @@ namespace BlogFitnessApp.Controllers
             return RedirectToAction("Add");  
         }
 
-
         [HttpGet]
         public async Task<IActionResult> List()
         {
@@ -60,8 +59,8 @@ namespace BlogFitnessApp.Controllers
             return View(tags);
         }
 
-
-        // Accion HTTP GET para mostrar el formulario de edicion de una etiqueta  
+        // Accion HTTP GET para mostrar el formulario de edicion de una etiqueta
+        [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
             // Busca la etiqueta en la base de datos por su ID
@@ -123,8 +122,5 @@ namespace BlogFitnessApp.Controllers
 
             return RedirectToAction("Edit", new {id = editTagRequest.Id});
         }
-
-
-
     }
 }

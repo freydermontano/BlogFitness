@@ -44,6 +44,7 @@ namespace BlogFitnessApp.Data
 
             //Super Admin por defecto
             var superAdminId = "12345678-1234-1234-1234-123456789012";
+            
 
             var superAdmin = new IdentityUser
             {
@@ -55,8 +56,22 @@ namespace BlogFitnessApp.Data
 
             };
 
+
+            var user1 = new IdentityUser
+            {
+                UserName = "user1@gmail.com",
+                Email = "user1@gmail.com",
+                NormalizedEmail = "user1@gmail.com".ToLower(),
+                NormalizedUserName = "user1@gmail.com".ToLower(),
+                Id = userRoleId,
+
+            };
+
             superAdmin.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(superAdmin, "superAdmin1234");
             builder.Entity<IdentityUser>().HasData(superAdmin);
+
+            user1.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(user1, "user1234");
+            builder.Entity<IdentityUser>().HasData(user1);
 
             //Agregar todos los roles al SuperAdmin
             var superAdminRoles = new List<IdentityUserRole<string>>

@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Acceso denegado";
+}
+
+<div class="container py-5  d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="d-flex align-items-center gap-4 bg-white p-4 ">
+        <!-- Imagen -->
+        <div>
+            <img src="https://cdn-icons-png.freepik.com/512/12701/12701462.png" alt="Acceso denegado"
+                 style="width: 100px; height: auto;" />
+        </div>
+
+        <!-- Texto -->
+        <div>
+            <h1 class="h3 text-danger fw-bold mb-3">Acceso denegado</h1>
+            <p class="mb-3">No tienes permiso para acceder a esta página.</p>
+            <a asp-area=""
+               asp-action="Index"
+               asp-controller="Home"
+               class="btn btn-dark">Volver al inicio</a>
+        </div>
+    </div>
+</div>

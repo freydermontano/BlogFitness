@@ -1,11 +1,13 @@
 ﻿using BlogFitnessApp.Models.Domain;
 using BlogFitnessApp.Models.ViewModels;
 using BlogFitnessApp.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BlogFitnessApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminBlogPostsController : Controller
     {
         public readonly ITagRepository _tagRepository;
@@ -79,9 +81,6 @@ namespace BlogFitnessApp.Controllers
             return RedirectToAction("Add");
         }
 
-
-
-
         [HttpGet]
         public async Task<IActionResult> List()
         {
@@ -89,7 +88,6 @@ namespace BlogFitnessApp.Controllers
             var blogPosts = await _blogPostRepository.GetAllAsync();
             return View(blogPosts);
         }
-
 
         //Accion que recibe id para editar blog post
         [HttpGet]
@@ -175,9 +173,6 @@ namespace BlogFitnessApp.Controllers
 
             //pasamos la informacion al modelo dominio
             blogPostDomainModel.Tags = selectedTags;
-
-
-
 
             // Llama al repositorio para actualizar y guardar la informacion actualizada
             var updateBlogPost = await _blogPostRepository.UpdateAsync(blogPostDomainModel);

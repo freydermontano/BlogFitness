@@ -52,11 +52,11 @@ namespace BlogFitnessApp.Controllers
                var roleIdentityResult =   await userManager.AddToRoleAsync(identityUser, "User");
                 if (roleIdentityResult.Succeeded)
                 {
-                    return RedirectToAction("Register");
+                    return RedirectToAction("Login");
                 }
             }
 
-            return View("Register");
+            return View("Login");
         }
 
 
@@ -64,6 +64,7 @@ namespace BlogFitnessApp.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+
             return View();
         }
 
@@ -78,11 +79,11 @@ namespace BlogFitnessApp.Controllers
 
             if (singInResult != null && singInResult.Succeeded)
             {
+               
                 return RedirectToAction("Index", "Home");
             }
 
             return View();
-
         }
 
         //Logout
@@ -92,6 +93,13 @@ namespace BlogFitnessApp.Controllers
               // Cierra la sesian del usuario actual
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        //Acceso Denegado
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

@@ -37,6 +37,9 @@
                         </li>
 
                         <!-- Dropdown de Administrador -->
+                        @* Si el usuario es  adminitrador mostrar acciones  *@
+                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Administrador
@@ -78,6 +81,7 @@
 
                             </ul>
                         </li>
+                    }
                     </ul>
 
                     @* Si el usuario está autenticado, muestra el nombre de usuario y un enlace a Logout *@
