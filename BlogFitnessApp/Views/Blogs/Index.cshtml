@@ -13,6 +13,9 @@
         @if (Model != null)
         {
             <div class="col-12 col-lg-8">
+
+
+
                 <div class=" overflow-hidden bg-white p-4">
                     <img src="@Model.FeaturedImageUrl"
                          alt="@Model.Heading"
@@ -21,6 +24,7 @@
 
                     <h1 class="fw-bold mb-3">@Model.Heading</h1>
                     <p class="text-muted fs-5 mb-4">@Model.ShortDescription</p>
+
 
                     <div class="mb-4">
                         @foreach (var blogPostTag in Model.Tags)

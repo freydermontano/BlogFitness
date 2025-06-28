@@ -62,10 +62,9 @@ namespace BlogFitnessApp.Controllers
 
         //Retorna la vista de Login 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = null)
         {
-
-            return View();
+            return View(new LoginViewModel { ReturnUrl = returnUrl });
         }
 
 
@@ -75,13 +74,32 @@ namespace BlogFitnessApp.Controllers
         {
 
             // Intenta iniciar sesion con el UserManager usando el nombre de usuario y contraseña
-          var singInResult =    await signInManager.PasswordSignInAsync(loginViewModel.UserName, loginViewModel.Password, false, false);
+          var signInResult = await signInManager.PasswordSignInAsync(
+              loginViewModel.UserName, 
+              loginViewModel.Password, 
+              false, false
+              );
 
-            if (singInResult != null && singInResult.Succeeded)
+            if (signInResult != null && signInResult.Succeeded)
             {
-               
+                var user = await userManager.FindByNameAsync(loginViewModel.UserName);
+                var roles = await userManager.GetRolesAsync(user);
+
+                // Si el usuario es administrador, redirigir a AdminTags/Add
+                if (roles.Contains("Admin"))
+                {
+                    return RedirectToAction("Add", "AdminTags");
+                }
+
+                // Redirigir a ReturnUrl si existe
+                if (!string.IsNullOrWhiteSpace(loginViewModel.ReturnUrl) && Url.IsLocalUrl(loginViewModel.ReturnUrl))
+                {
+                    return Redirect(loginViewModel.ReturnUrl);
+                }
+
                 return RedirectToAction("Index", "Home");
             }
+
 
             return View();
         }

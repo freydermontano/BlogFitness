@@ -16,6 +16,5 @@
 
         //Navegacion proppiedad para la relacion muchos a muchos con Tag
         public ICollection<Tag> Tags { get; set; }
-
     }
 }
