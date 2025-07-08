@@ -1,6 +1,14 @@
-﻿@model BlogFitnessApp.Models.Domain.BlogPost;
+﻿@* @model BlogFitnessApp.Models.Domain.BlogPost; *@
 
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+@inject UserManager<IdentityUser> userManager  
+
+
+@model BlogFitnessApp.Models.ViewModels.BlogDetailsViewModel;
+
+ 
 
 @{
     //Titulo de la pagina
@@ -13,6 +21,25 @@
         @if (Model != null)
         {
             <div class="col-12 col-lg-8">
+
+
+                @* Mostrar Likes  *@
+                <div class="col-12 col-lg-4 justify-content-start p-3">
+
+                    @* Mostrar total de likes para todos *@
+                    <span class="btn px-4 py-2 @(signInManager.IsSignedIn(User) && Model.Liked ? "disabled" : "")" id="likeDisplay">
+                        <i class="fas fa-thumbs-up me-2 @(signInManager.IsSignedIn(User) && Model.Liked ? "text-primary" : "")"></i>
+                        <span id="totalLikes" class="fw-bold">@Model.TotalLikes</span> Likes
+                    </span>
+
+                    @* Boton solo si esta logueado y no ha dado like *@
+                    @if (signInManager.IsSignedIn(User) && !Model.Liked)
+                    {
+                        <button id="btnLike" class="btn btn-outline-primary mt-2">
+                            <i class="fas fa-thumbs-up me-2"></i> ¡Me gusta!
+                        </button>
+                    }
+                </div>
 
 
 
@@ -59,3 +86,58 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const btnLikeElement = document.getElementById('btnLike');
+        const totalLikesElement = document.getElementById('totalLikes');
+        const likeDisplay = document.getElementById('likeDisplay');
+
+        async function getTotalLikes() {
+            try {
+                const response = await fetch('/api/BlogPostLike/@Model.Id/totalLikes');
+                if (!response.ok) throw new Error();
+                const total = await response.json();
+                totalLikesElement.innerText = total;
+                return total;
+            } catch {
+                console.error("Error al obtener likes.");
+                return 0;
+            }
+        }
+
+        async function addLikeForBlog() {
+            try {
+                const response = await fetch('/api/BlogPostLike/Add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        blogPostId: '@Model.Id'
+                    })
+                });
+
+                if (!response.ok) throw new Error();
+
+                const total = await getTotalLikes();
+
+                // Actualiza el contador visualmente
+                likeDisplay.innerHTML = `
+                    <i class="fas fa-thumbs-up me-2 text-primary"></i>
+                    <span id="totalLikes" class="fw-bold">${total}</span> Likes
+                `;
+
+                // Oculta el boton luego del like
+                btnLikeElement.style.display = 'none';
+
+            } catch (err) {
+                console.error("Error al enviar like.");
+            }
+        }
+
+        if (btnLikeElement) {
+            btnLikeElement.addEventListener('click', addLikeForBlog);
+        }
+    </script>
+}

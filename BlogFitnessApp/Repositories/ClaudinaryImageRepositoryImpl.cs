@@ -8,11 +8,11 @@ namespace BlogFitnessApp.Repositories
     {
 
 
-        private readonly IConfiguration configuration;// para acceder a la configuración de mi aplicacion (appsettings.json, secrets, variables de entorno, etc.)
+        private readonly IConfiguration configuration;// para acceder a la configuracion de mi aplicacion (appsettings.json, secrets, variables de entorno, etc.)
         private readonly Account account; //representa una cuenta de Cloudinary. Necesita tres datos: CloudName, ApiKey y ApiSecret
 
 
-        // Constructor que recibe la configuración por inyección de dependencias
+        // Constructor que recibe la configuracion por inyeccion de dependencias
         //Guarda el objeto IConfiguration en una propiedad de la clase
         public ClaudinaryImageRepositoryImpl(IConfiguration configuration)
         {
@@ -29,7 +29,7 @@ namespace BlogFitnessApp.Repositories
         {
             var client = new Cloudinary(account);
 
-            var uploadParams = new ImageUploadParams
+            var uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription(file.FileName, file.OpenReadStream()),
                 DisplayName = file.FileName,

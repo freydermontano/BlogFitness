@@ -1,11 +1,8 @@
-﻿using BlogFitnessApp.Data;
-using BlogFitnessApp.Models.Domain;
+﻿using BlogFitnessApp.Models.Domain;
 using BlogFitnessApp.Models.ViewModels;
 using BlogFitnessApp.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace BlogFitnessApp.Controllers
 {

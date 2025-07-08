@@ -46,13 +46,12 @@
                 </div>
 
                 @* Implementando campo para subir imagenes desde el formulario  *@
-                @* Implementando campo para subir imagenes desde el formulario  *@
                 <div class="mb-3">
                     <label class="form-label">Subir Imagen</label>
                     <input type="file" name="file" id="featuredImagenUpload" class="form-control" />
                     @if (Model.FeaturedImageUrl != null)
                     {
-                        <img src="@Model.FeaturedImageUrl" id="featuredImagenDisplay" style="display:block; margin-top:1rem;" width="297px" />
+                        <img src="@Model.FeaturedImageUrl" id="featuredImagenDisplay" style="display:block; margin-top:1rem;" width="300px" />
                     }
                     else
                     {
@@ -116,7 +115,7 @@
 @section Scripts {
     <script>
          var editor = new FroalaEditor('#Content',{
-            imageUploadURL:'/api/images';
+            imageUploadURL:'/api/images'
         });
 
 

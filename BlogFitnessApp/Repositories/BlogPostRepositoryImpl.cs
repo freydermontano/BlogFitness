@@ -1,7 +1,6 @@
 ﻿using BlogFitnessApp.Data;
 using BlogFitnessApp.Models.Domain;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 
 namespace BlogFitnessApp.Repositories
 {
