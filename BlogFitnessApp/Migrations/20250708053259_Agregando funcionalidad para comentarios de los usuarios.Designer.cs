@@ -4,6 +4,7 @@ using BlogFitnessApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogFitnessApp.Migrations
 {
     [DbContext(typeof(BLogFitnessDbContext))]
-    partial class BLogFitnessDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250708053259_Agregando funcionalidad para comentarios de los usuarios")]
+    partial class Agregandofuncionalidadparacomentariosdelosusuarios
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

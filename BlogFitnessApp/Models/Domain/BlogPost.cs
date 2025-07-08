@@ -1,4 +1,6 @@
-﻿namespace BlogFitnessApp.Models.Domain
+﻿using BlogFitnessApp.Models.ViewModels;
+
+namespace BlogFitnessApp.Models.Domain
 {
     public class BlogPost
     {
@@ -17,5 +19,8 @@
         //Navegacion proppiedad para la relacion muchos a muchos con Tag
         public ICollection<Tag> Tags { get; set; }
         public ICollection< BlogPostLike> Likes { get; set; }
+
+        //Agregar propiedad de comentarios
+        public ICollection<BlogPostComment> blogPostComments { get; set; }
     }
 }
