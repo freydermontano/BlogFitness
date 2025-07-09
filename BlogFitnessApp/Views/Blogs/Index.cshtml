@@ -74,8 +74,48 @@
                         @Html.Raw(Model.Content)
                     </div>
 
-                    <p class="text-muted small">Contenido exclusivo para tu bienestar.</p>
+
+                    @*  Comentarios para los usuarios logeado  *@
+
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            <h5 class="fw-normal mb-3">Deja un comentario</h5>
+
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <div class="mb-4">
+                                    <form method="post">
+                                        <div class="mb-4">
+                                            <textarea 
+                                                asp-for="BlogPostComment" 
+                                                class="form-control" 
+                                                rows="4" 
+                                                required>
+                                            </textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-dark">Agregar Comentario</button>
+                                        <input type="hidden" asp-for="Id" />
+                                        <input type="hidden" asp-for="UrlHandle" />
+                                    </form>
+                                </div>
+                            }
+                        </div>
+
+                        <div class=" card-body">
+                          <p>Comentarios</p>
+
+
+
+                        </div>
+                    </div>
+
+
+
+                    
+
                 </div>
+
+                    <p class="text-muted small">Contenido exclusivo para tu bienestar.</p>
             </div>
         }
         else

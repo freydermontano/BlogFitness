@@ -46,6 +46,8 @@ builder.Services.AddScoped<IImageRepository, ClaudinaryImageRepositoryImpl>();
 
 builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepositoryImpl>();
 
+builder.Services.AddScoped<IBlogPostCommentRepository, BlogPostCommentRepositoryImpl>();
+
 
 var app = builder.Build();
 

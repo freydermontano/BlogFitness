@@ -15,12 +15,15 @@ namespace BlogFitnessApp.Controllers
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly UserManager<IdentityUser> userManager;
 
+        private readonly IBlogPostCommentRepository blogPostCommentRepository;
+
         public BlogsController(
             IBlogPostRepository blogPostRepository,
             IBlogPostLikeRepository blogPostLikeRepository,
             //Usar autenticacion para validar algunos campos
             SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager
+            UserManager<IdentityUser> userManager,
+            IBlogPostCommentRepository blogPostCommentRepository
 
             )
         {
@@ -28,6 +31,7 @@ namespace BlogFitnessApp.Controllers
             this.blogPostLikeRepository = blogPostLikeRepository;
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.blogPostCommentRepository = blogPostCommentRepository;
         }
 
 
@@ -42,7 +46,7 @@ namespace BlogFitnessApp.Controllers
 
             if (blogPostDetails == null)
             {
-                return NotFound(); 
+                return NotFound();
             }
 
             // Obtener total de likes (todos pueden ver esto)
@@ -56,7 +60,7 @@ namespace BlogFitnessApp.Controllers
                 {
                     var blogPostLikes = await blogPostLikeRepository.GetLikesForBlogAsync(blogPostDetails.Id);
                     var likeFromUser = blogPostLikes.FirstOrDefault(x =>
-                        x.UserId == Guid.Parse(currentUser.Id)); 
+                        x.UserId == Guid.Parse(currentUser.Id));
                     liked = likeFromUser != null;
                 }
             }
@@ -80,6 +84,32 @@ namespace BlogFitnessApp.Controllers
             };
 
             return View(blogDetailsViewModel);
+        }
+
+
+        //Recibir la inforamcion del modelo vista en el formulario
+        [HttpPost]
+        public async Task<IActionResult> Index(BlogDetailsViewModel blogDetailsViewModel)
+        {
+
+            //que se va a necesitar para obtener comentarios del Post BlogPostId, Description, UserId
+
+            //Si el Usuario esta logeado permitir añadir comentario
+            if (signInManager.IsSignedIn(User))
+            {
+                var domainModel = new BlogPostComment
+                {
+                    BlogPostId = blogDetailsViewModel.Id,
+                    Description = blogDetailsViewModel.BlogPostComment,
+                    UserId = Guid.Parse(userManager.GetUserId(User)),
+                    DateAdded = DateTime.Now,
+                };
+
+                await blogPostCommentRepository.AddCommentAsync(domainModel);
+                return RedirectToAction("Index", "Home", new { urlHandle  = blogDetailsViewModel.UrlHandle});
+            }
+            
+            return View();
         }
 
     }

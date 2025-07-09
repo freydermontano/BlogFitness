@@ -24,6 +24,10 @@ namespace BlogFitnessApp.Models.ViewModels
         public int TotalLikes { get; set; }
 
         //Propiedad para verificar si el usuario ha dado like al blog post
-        public bool Liked { get; set; }  
+        public bool Liked { get; set; }
+
+        // String de comentarios del blog
+        public string BlogPostComment { get; set; }
+
     }
 }
