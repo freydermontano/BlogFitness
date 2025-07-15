@@ -6,5 +6,7 @@ namespace BlogFitnessApp.Repositories
     {
 
         Task<BlogPostComment> AddCommentAsync(BlogPostComment blogPostComment);
+
+        Task<IEnumerable<BlogPostComment>> GetCommentByBlogIdAsync(Guid blogPostId); 
     }
 }

@@ -18,6 +18,7 @@ namespace BlogFitnessApp.Models.ViewModels
         public DateTime PublishedDate { get; set; }
         public bool Visible { get; set; }
 
+
         public ICollection<Tag> Tags { get; set; }
 
         //Propiedad likes 
@@ -26,8 +27,11 @@ namespace BlogFitnessApp.Models.ViewModels
         //Propiedad para verificar si el usuario ha dado like al blog post
         public bool Liked { get; set; }
 
-        // String de comentarios del blog
-        public string BlogPostComment { get; set; }
+        public string CommentDescription { get; set; }
+
+        //Se hara auna lista para obtener los comentarios del blog post de usuarios   
+        public ICollection<BlogComment> comments { get; set; } 
+
 
     }
 }

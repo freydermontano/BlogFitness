@@ -1,5 +1,6 @@
 ﻿using BlogFitnessApp.Data;
 using BlogFitnessApp.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogFitnessApp.Repositories
 {
@@ -20,5 +21,20 @@ namespace BlogFitnessApp.Repositories
             await bLogFitnessDbContext.SaveChangesAsync();
             return blogPostComment;
         }
+
+        //Obtener commentarios filtrados de usuario para los blogs 
+        public async Task<IEnumerable<BlogPostComment>> GetCommentByBlogIdAsync(Guid blogPostId)
+        {
+            return 
+                await bLogFitnessDbContext.BlogPostComments
+                .Where(comment => comment.BlogPostId == blogPostId)
+                .ToListAsync();
+        }
+
+
+
+
+
+
     }
 }
